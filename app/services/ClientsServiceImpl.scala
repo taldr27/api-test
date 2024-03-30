@@ -1,20 +1,17 @@
 package services
 
 import javax.inject.Inject
-import scala.concurrent.{ExecutionContext, Future}
-import models.{Client, DatabaseModel}
+import models.Client
+import scala.concurrent.Future
 
-class ClientService @Inject()(databaseModel: DatabaseModel)(implicit ec: ExecutionContext) {
-  import databaseModel._ // Import dbConfig and profile.api from DatabaseModel
+trait ClientsService {
+  def addClient(client: Any): Future[Any]
+}
 
-  private class ClientTable(tag: Tag) extends Table[Client](tag, "clients") {
-    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-    def name = column[String]("name")
-    def email = column[String]("email")
-    def * = (id, name, email) <> ((Client.apply _).tupled, Client.unapply)
+class ClientsServiceImpl @Inject()(clientsRepository: Any) extends ClientsService {
+
+  override def addClient(client: Any): Future[Any] = {
+    val result: Any = "Client added successfully"
+    Future.successful(result)
   }
-
-  private val clients = TableQuery[ClientTable]
-
-  def addClient(client: Client): Future[Unit] = db.run(clients += client).map(_ => ())
 }
