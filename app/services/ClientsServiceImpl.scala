@@ -1,16 +1,13 @@
 package services
 
+import utils.dto.ClientDTO
+
 import javax.inject.Inject
-import models.Client
 import scala.concurrent.Future
 
-trait ClientsService {
-  def addClient(client: Any): Future[Any]
-}
+class ClientsServiceImpl @Inject()() extends ClientsService {
 
-class ClientsServiceImpl @Inject()(clientsRepository: Any) extends ClientsService {
-
-  override def addClient(client: Any): Future[Any] = {
+  def addClient(client: ClientDTO): Future[Any] = {
     val result: Any = "Client added successfully"
     Future.successful(result)
   }

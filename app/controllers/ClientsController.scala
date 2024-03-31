@@ -1,26 +1,17 @@
 package controllers
 
-import play.api.mvc._
-import play.api.libs.json._
-
+import play.api.mvc.*
+import play.api.libs.json.*
 import services.ClientsServiceImpl
+import utils.dto.ClientDTO
+
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-case class ClientDTO(
-                       name: String,
-                       email: String,
-                       phoneNumber: String
-                     )
-
-object ClientDTO {
-  implicit val format: Format[ClientDTO] = Json.format[ClientDTO]
-}
-
 class ClientController @Inject()(
-                                  cc: ControllerComponents,
-                                  val clientsService: ClientsServiceImpl
-                                )(implicit executionContext: ExecutionContext) extends AbstractController(cc) {
+  override val controllerComponents: ControllerComponents,
+  val clientsService: ClientsServiceImpl
+)(implicit executionContext: ExecutionContext) extends AbstractController(controllerComponents) {
 
   def addClient: Action[JsValue] = Action.async(parse.json) { implicit request =>
     request.body.validate[ClientDTO].fold(

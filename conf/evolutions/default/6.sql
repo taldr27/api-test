@@ -1,8 +1,8 @@
--- Clients schema
+-- Test4 schema
 
 -- !Ups
 
-CREATE TABLE Clients (
+CREATE TABLE Test4 (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL
@@ -10,4 +10,4 @@ CREATE TABLE Clients (
 
 -- !Downs
 
-DROP TABLE clients;
+DROP TABLE Test4;
