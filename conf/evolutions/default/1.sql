@@ -11,7 +11,7 @@ CREATE TABLE Clients (
     email VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL,
     number_of_visits INT,
-    unique_id VARCHAR(10)
+    unique_id VARCHAR(10) NOT NULL
 );
 
 -- Inserting test data

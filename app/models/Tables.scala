@@ -26,18 +26,18 @@ trait Tables {
    *  @param email Database column email SqlType(VARCHAR), Length(255,true)
    *  @param createdAt Database column created_at SqlType(TIMESTAMP)
    *  @param numberOfVisits Database column number_of_visits SqlType(INT), Default(None)
-   *  @param uniqueId Database column unique_id SqlType(VARCHAR), Length(10,true), Default(None) */
-  case class ClientsRow(id: Int, name: String, lastname: String, phoneNumber: String, address: Option[String] = None, email: String, createdAt: java.sql.Timestamp, numberOfVisits: Option[Int] = None, uniqueId: Option[String] = None)
+   *  @param uniqueId Database column unique_id SqlType(VARCHAR), Length(10,true) */
+  case class ClientsRow(id: Int, name: String, lastname: String, phoneNumber: String, address: Option[String] = None, email: String, createdAt: java.sql.Timestamp, numberOfVisits: Option[Int] = None, uniqueId: String)
   /** GetResult implicit for fetching ClientsRow objects using plain SQL queries */
   implicit def GetResultClientsRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Option[String]], e3: GR[java.sql.Timestamp], e4: GR[Option[Int]]): GR[ClientsRow] = GR{
     prs => import prs._
-    (ClientsRow.apply _).tupled((<<[Int], <<[String], <<[String], <<[String], <<?[String], <<[String], <<[java.sql.Timestamp], <<?[Int], <<?[String]))
+    (ClientsRow.apply _).tupled((<<[Int], <<[String], <<[String], <<[String], <<?[String], <<[String], <<[java.sql.Timestamp], <<?[Int], <<[String]))
   }
   /** Table description of table clients. Objects of this class serve as prototypes for rows in queries. */
   class Clients(_tableTag: Tag) extends profile.api.Table[ClientsRow](_tableTag, Some("test"), "clients") {
     def * = ((id, name, lastname, phoneNumber, address, email, createdAt, numberOfVisits, uniqueId)).mapTo[ClientsRow]
     /** Maps whole row to an option. Useful for outer joins. */
-    def ? = ((Rep.Some(id), Rep.Some(name), Rep.Some(lastname), Rep.Some(phoneNumber), address, Rep.Some(email), Rep.Some(createdAt), numberOfVisits, uniqueId)).shaped.<>({r=>import r._; _1.map(_=> (ClientsRow.apply _).tupled((_1.get, _2.get, _3.get, _4.get, _5, _6.get, _7.get, _8, _9)))}, (_:Any) => throw new Exception("Inserting into ? projection not supported."))
+    def ? = ((Rep.Some(id), Rep.Some(name), Rep.Some(lastname), Rep.Some(phoneNumber), address, Rep.Some(email), Rep.Some(createdAt), numberOfVisits, Rep.Some(uniqueId))).shaped.<>({r=>import r._; _1.map(_=> (ClientsRow.apply _).tupled((_1.get, _2.get, _3.get, _4.get, _5, _6.get, _7.get, _8, _9.get)))}, (_:Any) => throw new Exception("Inserting into ? projection not supported."))
 
     /** Database column id SqlType(INT), AutoInc, PrimaryKey */
     val id: Rep[Int] = column[Int]("id", O.AutoInc, O.PrimaryKey)
@@ -55,8 +55,8 @@ trait Tables {
     val createdAt: Rep[java.sql.Timestamp] = column[java.sql.Timestamp]("created_at")
     /** Database column number_of_visits SqlType(INT), Default(None) */
     val numberOfVisits: Rep[Option[Int]] = column[Option[Int]]("number_of_visits", O.Default(None))
-    /** Database column unique_id SqlType(VARCHAR), Length(10,true), Default(None) */
-    val uniqueId: Rep[Option[String]] = column[Option[String]]("unique_id", O.Length(10,varying=true), O.Default(None))
+    /** Database column unique_id SqlType(VARCHAR), Length(10,true) */
+    val uniqueId: Rep[String] = column[String]("unique_id", O.Length(10,varying=true))
   }
   /** Collection-like TableQuery object for table Clients */
   lazy val Clients = new TableQuery(tag => new Clients(tag))

@@ -4,8 +4,12 @@ import play.api.libs.json.{Format, Json}
 
 case class ClientDTO(
                       name: String,
+                      lastname: String,
+                      phoneNumber: String,
+                      address: Option[String],
                       email: String,
-                      phoneNumber: String
+                      numberOfVisits: Option[Int],
+                      unique_id: String
                     )
 
 object ClientDTO {

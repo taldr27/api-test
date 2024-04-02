@@ -1,10 +1,11 @@
 package models
 
-import utils.dto.ClientDTO
+import models.Tables.ClientsRow
 
 import scala.concurrent.Future
+import com.google.inject.ImplementedBy
 
+@ImplementedBy(classOf[ClientModelImpl])
 trait ClientModel {
-  def add(client: ClientDTO): Future[Any]
+  def add(client: ClientsRow): Future[Int]
 }
-//case class ClientModel(id: String, name: String, email: String, phoneNumber: String)
